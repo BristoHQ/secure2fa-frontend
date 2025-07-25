@@ -1,0 +1,227 @@
+.sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100vh;
+  background-color: #212121;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  /* border-top: 1px solid #13ac58; */
+}
+
+.sidebar .encryption-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 15px 15px 15px;
+  color: #fcfafa;
+  text-align: center;
+  font-size: 11px;
+  padding: 5px;
+  background: #13ac58;
+  border-radius: 7px;
+  gap: 6px;
+  margin-right: 15px;
+}
+.sidebar .user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 20px 0px 20px;
+  margin-right: 0;
+  color: #c5c5c5;
+  /* border-right: 1px solid rgba(255, 255, 255, 0.1); */
+}
+.sidebar .user-profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 10px auto;
+  display: block;
+}
+
+.sidebar .user-profile .user-info {
+  margin-left: 5px;
+}
+
+.sidebar .user-profile h2 {
+  font-size: 1.2em;
+  color: #c5c5c5;
+  margin: 0;
+  font-weight: 500;
+}
+
+.sidebar .user-profile p {
+  font-size: smaller;
+  color: #a0a0a0;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 5px 0;
+}
+
+.sidebar .user-profile p:hover {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+  overflow: visible;
+  white-space: normal;
+  position: relative;
+  z-index: 1;
+}
+
+.divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 15px 0px;
+}
+
+.sidebar .lists ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .lists li {
+  padding: 12px 16px;
+  cursor: pointer;
+  margin: 0px 10px;
+}
+
+.sidebar .lists li:hover {
+  background-color: #333;
+  color: #fff;
+  border-radius: 7px;
+  /* margin: 0px 10px; */
+}
+.sidebar .lists li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.sidebar .logout {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.sidebar .logout button {
+  font-size: 17px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 15px 70px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.sidebar .logout button:hover {
+  background-color: #d32f2f;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 60px;
+    left: -100%;
+    min-height: calc(100vh - 60px);
+    transition: left 0.3s ease;
+    z-index: 5000;
+    border-top: 1px solid #1a1a1a;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .sidebar .user-profile {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .sidebar .user-profile img {
+    width: 50px;
+    height: 50px;
+    margin: 5px auto;
+  }
+
+  .sidebar .user-profile .user-info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .sidebar .user-profile h2 {
+    font-size: 1em;
+  }
+
+  .sidebar .user-profile p {
+    max-width: 200px;
+    font-size: 12px;
+    margin: 3px auto;
+  }
+
+  .sidebar .encryption-info {
+    margin: 10px 15px;
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .sidebar .lists li {
+    padding: 15px 20px;
+    margin: 5px 15px;
+    font-size: 16px;
+  }
+
+  .sidebar .logout {
+    position: relative;
+    bottom: auto;
+    margin-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .sidebar .logout button {
+    font-size: 16px;
+    padding: 12px 40px;
+    width: 80%;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+  }
+
+  .sidebar .user-profile {
+    padding: 10px;
+  }
+
+  .sidebar .user-profile img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .sidebar .user-profile h2 {
+    font-size: 0.9em;
+  }
+
+  .sidebar .user-profile p {
+    font-size: 11px;
+    max-width: 180px;
+  }
+
+  .sidebar .lists li {
+    padding: 12px 15px;
+    font-size: 15px;
+  }
+
+  .sidebar .logout button {
+    font-size: 15px;
+    padding: 10px 30px;
+  }
+}

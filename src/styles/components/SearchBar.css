@@ -1,0 +1,224 @@
+.searchbar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.searchbar-container .filter {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  min-width: 100px;
+  margin-left: 10px;
+  position: relative;
+  height: 40px;
+}
+
+.searchbar-container .filter::after {
+  content: "▼";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #c6c6c6;
+  font-size: 12px;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.searchbar-container .filter:hover::after {
+  color: #ffffff;
+}
+
+.searchbar-container .filter:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.searchbar-container .filter select {
+  background-color: transparent;
+  color: #c6c6c6;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 10px 15px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  flex: 1;
+  text-transform: capitalize;
+  font-weight: 500;
+  /* letter-spacing: 0.5px; */
+  min-width: 70px;
+}
+
+.searchbar-container .filter select:focus {
+  color: #ffffff;
+}
+
+.searchbar-container select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s ease;
+}
+
+.searchbar-container select option:hover {
+  background-color: #2a2a2a;
+}
+
+.searchbar-container select option:checked {
+  background-color: #3a3a3a;
+  color: #4caf50;
+}
+
+.searchbar-container .filter button {
+  background-color: transparent;
+  color: #c6c6c6;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  margin: 0px 8px 0px 12px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.searchbar-container .filter button:hover {
+  color: #ffffff;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  /* justify-content: flex-start; */
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.searchbar input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 5px;
+  font-size: 14px;
+  background-color: transparent;
+  color: #c6c6c6;
+}
+.searchbar .divider {
+  height: 16px;
+  padding-left: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 0 10px;
+}
+.searchbar .search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #c6c6c6;
+  font-size: 16px;
+  margin: 0px 0px 0px 10px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .searchbar-container {
+    flex-direction: row;
+    gap: 8px;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .searchbar-container .filter {
+    min-width: 90px;
+    margin-left: 8px;
+    flex-shrink: 0;
+    height: 40px;
+  }
+
+  .searchbar {
+    flex: 1;
+    min-width: 50px;
+    padding: 8px;
+    height: 40px;
+    max-width: 200px;
+  }
+
+  .searchbar input {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .searchbar .search-button {
+    font-size: 18px;
+    padding: 5px;
+  }
+
+  .searchbar-container .filter select {
+    padding: 10px 12px;
+    font-size: 14px;
+    min-width: 60px;
+  }
+
+  .searchbar-container .filter button {
+    font-size: 16px;
+    margin: 0px 8px 0px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchbar-container {
+    padding: 5px;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .searchbar-container .filter {
+    min-width: 75px;
+    margin-left: 5px;
+    height: 36px;
+  }
+
+  .searchbar {
+    padding: 6px;
+    height: 36px;
+    min-width: 80px;
+    max-width: 150px;
+  }
+
+  .searchbar input {
+    font-size: 15px;
+    padding: 6px;
+  }
+
+  .searchbar .divider {
+    margin: 0 5px;
+  }
+
+  .searchbar-container .filter select {
+    padding: 8px 10px;
+    font-size: 13px;
+    min-width: 50px;
+  }
+
+  .searchbar-container .filter button {
+    font-size: 15px;
+    margin: 0px 6px 0px 8px;
+  }
+}

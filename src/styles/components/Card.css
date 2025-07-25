@@ -1,0 +1,363 @@
+:root {
+  --card-bg-color: #1e1e1e;
+  --card-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  background-color: var(--card-bg-color);
+  border-radius: 8px;
+  box-shadow: var(--card-box-shadow);
+  padding: 16px;
+  margin: 16px 16px 16px 0px;
+  transition: box-shadow 0.3s ease;
+  height: 120px;
+  width: 270px;
+}
+
+.card .upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card .upper .icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  background-color: #13ac58;
+}
+
+.card .upper .icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.card .upper .info {
+  flex: 1;
+  margin-left: 16px;
+}
+
+.card .upper .info .account {
+  margin: 0;
+  font-size: 1.2em;
+  color: #c5c5c5;
+}
+
+.card .upper .info .name {
+  margin: 0;
+  font-size: 0.9em;
+  color: #c5c5c5;
+}
+
+.card .upper .info .totp {
+  margin: 0;
+  font-size: 1.8em;
+  color: #c5c5c5;
+  transition: all 0.3s ease;
+}
+
+.card .upper .info .totp.blurred {
+  filter: blur(8px);
+  user-select: none;
+}
+
+.card .upper .timer {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-circle {
+  width: 50px;
+  height: 50px;
+  transform: rotate(-90deg);
+  position: absolute;
+}
+
+.timer-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 2;
+}
+
+.timer-progress {
+  fill: none;
+  stroke: #13ac58;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s ease-in-out;
+}
+
+.card .upper .timer .time {
+  font-weight: bold;
+  color: #13ac58;
+  font-size: 14px;
+  z-index: 1;
+  position: relative;
+}
+
+.card .lower {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.card .lower .actions {
+  display: flex;
+  gap: 16px;
+}
+
+.card .lower .actions .view,
+.card .lower .actions .copy,
+.card .lower .delete {
+  background-color: transparent;
+  border: none;
+  color: #c5c5c5;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.card .lower .actions .view:hover {
+  background-color: rgba(19, 172, 88, 0.1);
+  color: #13ac58;
+  transform: translateY(-1px);
+}
+
+.card .lower .actions .copy:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+  color: #4a90e2;
+  transform: translateY(-1px);
+}
+
+.card .lower .actions .copy.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.card .lower .actions .copy.disabled:hover {
+  background-color: transparent;
+  color: #c5c5c5;
+  transform: none;
+}
+
+.card .lower .delete:hover {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+  transform: translateY(-1px);
+}
+
+/* Delete Popup Styles */
+.delete-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.delete-popup {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: popupSlideIn 0.3s ease-out;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.delete-popup .popup-icon {
+  font-size: 48px;
+  color: #ff4444;
+  margin-bottom: 16px;
+}
+
+.delete-popup h3 {
+  color: #ffffff;
+  font-size: 20px;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.delete-popup p {
+  color: #c6c6c6;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+}
+
+.delete-popup .warning-text {
+  color: #ff7979;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.popup-actions .cancel-btn {
+  background: transparent;
+  color: #c6c6c6;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.popup-actions .cancel-btn:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.popup-actions .delete-btn {
+  background: linear-gradient(45deg, #ff4444, #ff6b6b);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.popup-actions .delete-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 68, 68, 0.3);
+}
+
+/* Copied Toast Message */
+.copied-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #13ac58, #4ade80);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(19, 172, 88, 0.3);
+  z-index: 10001;
+  animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-in 1.7s;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.copied-toast i {
+  font-size: 16px;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 480px) {
+  .delete-popup {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .delete-popup .popup-icon {
+    font-size: 40px;
+  }
+
+  .delete-popup h3 {
+    font-size: 18px;
+  }
+
+  .delete-popup p {
+    font-size: 14px;
+  }
+
+  .popup-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .popup-actions .cancel-btn,
+  .popup-actions .delete-btn {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .card .upper .timer {
+    width: 45px;
+    height: 45px;
+  }
+
+  .timer-circle {
+    width: 45px;
+    height: 45px;
+  }
+
+  .card .upper .timer .time {
+    font-size: 12px;
+  }
+
+  .copied-toast {
+    top: 15px;
+    right: 15px;
+    left: 15px;
+    right: 15px;
+    margin: 0 auto;
+    max-width: 280px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+}
