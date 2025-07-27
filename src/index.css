@@ -1,10 +1,247 @@
-* {
+/* Import CSS Variables */
+@import "./styles/variables.css";
+
+/* Import Utility Classes */
+@import "./styles/utilities.css";
+
+/* Import Skeleton Loading */
+@import "./styles/skeleton.css";
+
+/* Import Loading Styles */
+@import "./styles/loading.css";
+
+/* Global Reset and Base Styles */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: #1A1A1A;
-  color: #C7C7C7;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1a1a1a;
+  color: #c7c7c7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure Remix Icons render properly */
+.ri-search-line,
+.ri-filter-line,
+.ri-lock-unlock-line,
+.ri-lock-password-line,
+.ri-edit-line,
+.ri-delete-bin-line,
+.ri-add-line,
+.ri-settings-line,
+.ri-user-line,
+.ri-logout-box-line,
+.ri-menu-line {
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+/* Common element improvements */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Utility classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  margin: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #13ac58, #4ade80);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #0f8a47, #3ca76a);
+  box-shadow: 0 2px 8px rgba(19, 172, 88, 0.3);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, #0d7a3f, #35976b);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #13ac58 rgba(255, 255, 255, 0.05);
+}
+
+/* Enhanced scrollbar for modals and cards */
+.modal-content,
+.card-content,
+.pin-setup-modal,
+.pin-req-card,
+.token-card,
+.profile-card {
+  scrollbar-width: thin;
+  scrollbar-color: #13ac58 rgba(255, 255, 255, 0.05);
+}
+
+.modal-content::-webkit-scrollbar,
+.card-content::-webkit-scrollbar,
+.pin-setup-modal::-webkit-scrollbar,
+.pin-req-card::-webkit-scrollbar,
+.token-card::-webkit-scrollbar,
+.profile-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track,
+.card-content::-webkit-scrollbar-track,
+.pin-setup-modal::-webkit-scrollbar-track,
+.pin-req-card::-webkit-scrollbar-track,
+.token-card::-webkit-scrollbar-track,
+.profile-card::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.card-content::-webkit-scrollbar-thumb,
+.pin-setup-modal::-webkit-scrollbar-thumb,
+.pin-req-card::-webkit-scrollbar-thumb,
+.token-card::-webkit-scrollbar-thumb,
+.profile-card::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #13ac58aa, #4ade80aa);
+  border-radius: 4px;
+  border: none;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover,
+.card-content::-webkit-scrollbar-thumb:hover,
+.pin-setup-modal::-webkit-scrollbar-thumb:hover,
+.pin-req-card::-webkit-scrollbar-thumb:hover,
+.token-card::-webkit-scrollbar-thumb:hover,
+.profile-card::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #13ac58, #4ade80);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Touch optimization */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Improve touch targets */
+  button,
+  input,
+  select,
+  textarea,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  /* Smaller touch targets for very small screens */
+  button,
+  input,
+  select,
+  textarea,
+  a {
+    min-height: 40px;
+    min-width: 40px;
+  }
+}
+
+/* Landscape phone optimization */
+@media (max-width: 896px) and (orientation: landscape) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* Large mobile screens */
+@media (min-width: 576px) and (max-width: 767px) {
+  html {
+    font-size: 15px;
+  }
 }

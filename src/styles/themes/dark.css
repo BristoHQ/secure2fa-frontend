@@ -1,0 +1,36 @@
+/* Dark Theme Variables - Default */
+[data-theme="dark"],
+.theme-dark {
+  /* Primary Colors */
+  --primary-color: #13ac58;
+  --primary-dark: #0f8a46;
+  --primary-light: #1bc763;
+
+  /* Background Colors */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #212121;
+  --bg-tertiary: #2a2a2a;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --bg-hover: rgba(255, 255, 255, 0.08);
+
+  /* Text Colors */
+  --text-primary: #c7c7c7;
+  --text-secondary: #c5c5c5;
+  --text-muted: #868e96;
+  --text-white: #ffffff;
+  --text-dark: #212529;
+
+  /* Border Colors */
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.2);
+  --border-dark: rgba(255, 255, 255, 0.05);
+
+  /* Shadows */
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.4);
+
+  /* Card specific */
+  --card-bg-color: #1e1e1e;
+  --card-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

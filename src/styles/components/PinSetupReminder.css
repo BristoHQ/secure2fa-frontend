@@ -1,0 +1,399 @@
+/* PIN Setup Reminder Modal Styles */
+.pin-reminder-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pin-reminder-modal {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(25px);
+  max-width: 550px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.pin-reminder-header {
+  text-align: center;
+  padding: 30px 30px 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.1),
+    rgba(220, 38, 38, 0.05)
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.warning-icon {
+  margin-bottom: 15px;
+}
+
+.warning-icon i {
+  font-size: 60px;
+  color: #fbbf24;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.pin-reminder-header h2 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pin-reminder-header p {
+  color: #ef4444;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Content */
+.pin-reminder-content {
+  padding: 25px 30px;
+}
+
+.security-benefits h3 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+}
+
+.security-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px 0;
+}
+
+.security-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.security-benefits li i {
+  font-size: 18px;
+  color: #13ac58;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.security-benefits li span {
+  color: #c6c6c6;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Warning Box */
+.security-warning {
+  margin-top: 20px;
+}
+
+.warning-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.warning-box i {
+  font-size: 20px;
+  color: #fbbf24;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.warning-box strong {
+  color: #fbbf24;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.warning-box p {
+  color: #fca5a5;
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Actions */
+.pin-reminder-actions {
+  padding: 0 30px 25px;
+}
+
+.setup-now-btn {
+  width: 100%;
+  background: linear-gradient(45deg, #13ac58, #00d4aa);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(19, 172, 88, 0.3);
+}
+
+.setup-now-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #0f8a47, #00b894);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(19, 172, 88, 0.4);
+}
+
+.setup-now-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.setup-now-btn i {
+  font-size: 18px;
+}
+
+.rotating {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Secondary Actions */
+.secondary-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.remind-later-btn,
+.dismiss-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #c6c6c6;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 120px;
+}
+
+.remind-later-btn:hover {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+}
+
+.dismiss-btn:hover {
+  background: rgba(107, 114, 128, 0.2);
+  border-color: rgba(107, 114, 128, 0.4);
+  color: #d1d5db;
+}
+
+.remind-later-btn i,
+.dismiss-btn i {
+  font-size: 14px;
+}
+
+/* Footer */
+.pin-reminder-footer {
+  padding: 0 30px 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 10px;
+  padding-top: 20px;
+}
+
+.security-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.security-info i {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.security-info span {
+  color: #9ca3af;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pin-reminder-overlay {
+    padding: 15px;
+  }
+
+  .pin-reminder-modal {
+    border-radius: 16px;
+  }
+
+  .pin-reminder-header {
+    padding: 25px 20px 15px;
+  }
+
+  .pin-reminder-header h2 {
+    font-size: 22px;
+  }
+
+  .warning-icon i {
+    font-size: 50px;
+  }
+
+  .pin-reminder-content {
+    padding: 20px;
+  }
+
+  .pin-reminder-actions {
+    padding: 0 20px 20px;
+  }
+
+  .pin-reminder-footer {
+    padding: 0 20px 20px;
+  }
+
+  .secondary-actions {
+    flex-direction: column;
+  }
+
+  .remind-later-btn,
+  .dismiss-btn {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .pin-reminder-header h2 {
+    font-size: 20px;
+  }
+
+  .warning-icon i {
+    font-size: 45px;
+  }
+
+  .setup-now-btn {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .security-benefits li span {
+    font-size: 13px;
+  }
+
+  .warning-box {
+    padding: 14px;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .pin-reminder-modal {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .warning-box {
+    border: 2px solid rgba(239, 68, 68, 0.5);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pin-reminder-overlay,
+  .pin-reminder-modal {
+    animation: none;
+  }
+
+  .warning-icon i {
+    animation: none;
+  }
+
+  .rotating {
+    animation: none;
+  }
+
+  .setup-now-btn {
+    transition: none;
+  }
+}

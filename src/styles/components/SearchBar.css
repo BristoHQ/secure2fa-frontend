@@ -2,17 +2,17 @@
   display: flex;
   align-items: center;
   width: 100%;
+  gap: var(--spacing-sm);
 }
 
 .searchbar-container .filter {
   display: flex;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-card);
+  transition: var(--transition);
   min-width: 100px;
-  margin-left: 10px;
   position: relative;
   height: 40px;
 }
@@ -20,140 +20,205 @@
 .searchbar-container .filter::after {
   content: "▼";
   position: absolute;
-  right: 12px;
+  right: var(--spacing-md);
   top: 50%;
   transform: translateY(-50%);
-  color: #c6c6c6;
-  font-size: 12px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
   pointer-events: none;
-  transition: color 0.3s ease;
+  transition: var(--transition);
 }
 
 .searchbar-container .filter:hover::after {
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .searchbar-container .filter:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-light);
+  background-color: var(--bg-hover);
 }
 
 .searchbar-container .filter select {
   background-color: transparent;
-  color: #c6c6c6;
+  color: var(--text-secondary);
   border: none;
   outline: none;
-  font-size: 14px;
-  padding: 10px 15px;
+  font-size: var(--font-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   flex: 1;
   text-transform: capitalize;
-  font-weight: 500;
-  /* letter-spacing: 0.5px; */
+  font-weight: var(--font-medium);
   min-width: 70px;
 }
 
 .searchbar-container .filter select:focus {
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .searchbar-container select option {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 500;
+  background-color: var(--bg-primary);
+  color: var(--text-white);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
   border: none;
   text-transform: capitalize;
   letter-spacing: 0.5px;
-  transition: background-color 0.2s ease;
+  transition: var(--transition);
 }
 
 .searchbar-container select option:hover {
-  background-color: #2a2a2a;
+  background-color: var(--bg-tertiary);
 }
 
 .searchbar-container select option:checked {
-  background-color: #3a3a3a;
+  background-color: var(--bg-tertiary);
   color: #4caf50;
 }
 
 .searchbar-container .filter button {
   background-color: transparent;
-  color: #c6c6c6;
+  color: var(--text-secondary);
   border: none;
   outline: none;
-  font-size: 16px;
-  border: none;
-  outline: none;
-  margin: 0px 8px 0px 12px;
+  font-size: var(--font-base);
+  margin: 0 var(--spacing-sm) 0 var(--spacing-md);
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: var(--transition);
   flex-shrink: 0;
 }
 
 .searchbar-container .filter button:hover {
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .searchbar {
   display: flex;
   align-items: center;
-  /* justify-content: flex-start; */
   background-color: transparent;
-  border-radius: 5px;
-  padding: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
   height: 40px;
   box-sizing: border-box;
+  transition: var(--transition);
+}
+
+.searchbar:hover {
+  border-color: var(--border-light);
+}
+
+.searchbar:focus-within {
+  border-color: var(--primary-color);
 }
 
 .searchbar input {
   border: none;
   outline: none;
   flex: 1;
-  padding: 5px;
-  font-size: 14px;
+  padding: var(--spacing-sm);
+  font-size: var(--font-sm);
   background-color: transparent;
-  color: #c6c6c6;
+  color: var(--text-secondary);
+  transition: var(--transition);
 }
+
+.searchbar input:focus {
+  color: var(--text-primary);
+}
+
+.searchbar input::placeholder {
+  color: var(--text-muted);
+}
+
 .searchbar .divider {
   height: 16px;
-  padding-left: 1px;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin: 0 10px;
+  width: 1px;
+  background-color: var(--border-color);
+  margin: 0 var(--spacing-sm);
 }
+
 .searchbar .search-button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #c6c6c6;
-  font-size: 16px;
-  margin: 0px 0px 0px 10px;
+  color: var(--text-secondary);
+  font-size: var(--font-base);
+  margin-left: var(--spacing-sm);
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition);
+}
+
+.searchbar .search-button:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-hover);
 }
 
 /* Mobile Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: var(--breakpoint-md)) {
   .searchbar-container {
     flex-direction: row;
-    gap: 8px;
-    padding: 10px;
+    gap: 10px;
+    padding: 12px;
     align-items: center;
     width: 100%;
   }
 
   .searchbar-container .filter {
-    min-width: 90px;
-    margin-left: 8px;
+    min-width: 100px;
+    margin-left: 10px;
     flex-shrink: 0;
-    height: 40px;
+    height: 42px;
   }
 
   .searchbar {
     flex: 1;
+    min-width: 60px;
+    padding: 9px;
+    height: 42px;
+    max-width: 220px;
+  }
+
+  .searchbar input {
+    font-size: 16px;
+    padding: 9px;
+  }
+
+  .searchbar .search-button {
+    font-size: 19px;
+    padding: 6px;
+  }
+
+  .searchbar-container .filter select {
+    padding: 11px 13px;
+    font-size: 15px;
+    min-width: 70px;
+  }
+
+  .searchbar-container .filter button {
+    font-size: 17px;
+    margin: 0px 9px 0px 11px;
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .searchbar-container {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .searchbar-container .filter {
+    min-width: 90px;
+    margin-left: 8px;
+    height: 40px;
+  }
+
+  .searchbar {
     min-width: 50px;
     padding: 8px;
     height: 40px;
@@ -184,14 +249,59 @@
 
 @media (max-width: 480px) {
   .searchbar-container {
-    padding: 5px;
-    gap: 5px;
+    padding: 6px;
+    gap: 6px;
     width: 100%;
   }
 
   .searchbar-container .filter {
-    min-width: 75px;
-    margin-left: 5px;
+    min-width: 80px;
+    margin-left: 6px;
+    height: 38px;
+  }
+
+  .searchbar {
+    padding: 7px;
+    height: 38px;
+    min-width: 90px;
+    max-width: 160px;
+  }
+
+  .searchbar input {
+    font-size: 15px;
+    padding: 7px;
+  }
+
+  .searchbar .divider {
+    margin: 0 6px;
+  }
+
+  .searchbar-container .filter select {
+    padding: 9px 11px;
+    font-size: 13px;
+    min-width: 55px;
+  }
+
+  .searchbar-container .filter button {
+    font-size: 15px;
+    margin: 0px 7px 0px 9px;
+  }
+
+  .searchbar .search-button {
+    font-size: 16px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: var(--breakpoint-xs)) {
+  .searchbar-container {
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .searchbar-container .filter {
+    min-width: 70px;
+    margin-left: 4px;
     height: 36px;
   }
 
@@ -199,26 +309,35 @@
     padding: 6px;
     height: 36px;
     min-width: 80px;
-    max-width: 150px;
+    max-width: 140px;
   }
 
   .searchbar input {
-    font-size: 15px;
+    font-size: 16px;
     padding: 6px;
   }
 
   .searchbar .divider {
-    margin: 0 5px;
+    margin: 0 4px;
   }
 
   .searchbar-container .filter select {
-    padding: 8px 10px;
-    font-size: 13px;
+    padding: 8px 9px;
+    font-size: 12px;
     min-width: 50px;
   }
 
   .searchbar-container .filter button {
+    font-size: 14px;
+    margin: 0px 5px 0px 7px;
+    min-height: 36px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .searchbar .search-button {
     font-size: 15px;
-    margin: 0px 6px 0px 8px;
+    padding: 3px;
+    min-height: 30px;
+    -webkit-tap-highlight-color: transparent;
   }
 }

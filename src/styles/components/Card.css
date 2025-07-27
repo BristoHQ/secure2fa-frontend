@@ -10,8 +10,12 @@
   padding: 16px;
   margin: 16px 16px 16px 0px;
   transition: box-shadow 0.3s ease;
-  height: 120px;
+  height: 170px;
   width: 270px;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .card .upper {
@@ -33,6 +37,7 @@
   width: 100%;
   height: 100%;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .card .upper .info {
@@ -307,10 +312,98 @@
 }
 
 /* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    height: 150px;
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-sm);
+  }
+
+  .card .upper .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+  }
+
+  .card .upper .info {
+    margin-left: var(--spacing-sm);
+  }
+
+  .card .upper .info .account {
+    font-size: 1.1em;
+  }
+
+  .card .upper .info .issuer {
+    font-size: 0.85em;
+  }
+
+  .card .upper .timer {
+    width: 50px;
+    height: 50px;
+  }
+
+  .timer-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .card .upper .timer .time {
+    font-size: 13px;
+  }
+  .card .lower {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    height: 140px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .card .upper .icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .card .upper .info .account {
+    font-size: 1em;
+  }
+
+  .card .upper .info .issuer {
+    font-size: 0.8em;
+  }
+  .card .lower {
+    margin-top: 0px;
+  }
+}
+
 @media (max-width: 480px) {
+  .card {
+    height: 130px;
+  }
+
+  .card .upper .timer {
+    width: 45px;
+    height: 45px;
+  }
+
+  .timer-circle {
+    width: 45px;
+    height: 45px;
+  }
+
+  .card .upper .timer .time {
+    font-size: 12px;
+  }
+  .card .lower {
+    margin-top: 0px;
+  }
+
   .delete-popup {
-    margin: 20px;
-    padding: 20px;
+    margin: var(--spacing-md);
+    padding: var(--spacing-md);
   }
 
   .delete-popup .popup-icon {
@@ -327,7 +420,7 @@
 
   .popup-actions {
     flex-direction: column;
-    gap: 8px;
+    gap: var(--spacing-xs);
   }
 
   .popup-actions .cancel-btn,
@@ -336,28 +429,53 @@
     padding: 14px;
   }
 
-  .card .upper .timer {
+  .copied-toast {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    max-width: calc(100% - 30px);
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    height: 120px;
+    padding: var(--spacing-xs);
+  }
+  .card .lower {
+    margin-top: 0px;
+  }
+
+  .card .upper .icon {
     width: 45px;
     height: 45px;
+  }
+
+  .card .upper .info {
+    margin-left: var(--spacing-xs);
+  }
+
+  .card .upper .info .account {
+    font-size: 0.9em;
+  }
+
+  .card .upper .info .issuer {
+    font-size: 0.75em;
+  }
+
+  .card .upper .timer {
+    width: 40px;
+    height: 40px;
   }
 
   .timer-circle {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
   }
 
   .card .upper .timer .time {
-    font-size: 12px;
-  }
-
-  .copied-toast {
-    top: 15px;
-    right: 15px;
-    left: 15px;
-    right: 15px;
-    margin: 0 auto;
-    max-width: 280px;
-    font-size: 13px;
-    padding: 10px 16px;
+    font-size: 11px;
   }
 }

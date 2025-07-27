@@ -1,0 +1,315 @@
+/* Loading and FOUC Prevention */
+
+/* Prevent FOUC by hiding content until styled */
+.app-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.app-loaded {
+  opacity: 1;
+}
+
+/* Loading spinner component */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.loading-text {
+  color: var(--text-muted);
+  font-size: var(--font-sm);
+  margin-top: var(--spacing-sm);
+}
+
+/* Skeleton loading for cards */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--border-radius);
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-card {
+  height: 120px;
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-text {
+  height: 16px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.skeleton-text.short {
+  width: 60%;
+}
+
+.skeleton-text.medium {
+  width: 80%;
+}
+
+.skeleton-text.long {
+  width: 100%;
+}
+
+/* Error states */
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 3rem;
+  color: var(--danger-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.error-title {
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.error-message {
+  color: var(--text-muted);
+  font-size: var(--font-sm);
+  max-width: 400px;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Print styles */
+@media print {
+  .sidebar,
+  nav,
+  .navbar-actions {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+  }
+
+  .content {
+    padding: 0 !important;
+  }
+}
+
+/* Enhanced Loading Animations */
+@keyframes smoothRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes loadingDots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Loading spinner classes */
+.rotating {
+  animation: smoothRotate 1.2s linear infinite;
+}
+
+.loading-spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.loading-spinner i {
+  font-size: 1.2em;
+  animation: smoothRotate 1.2s linear infinite;
+}
+
+/* Enhanced loading text with dots */
+.loading-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin: 16px 0;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 3px;
+}
+
+.loading-dots span {
+  width: 4px;
+  height: 4px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  animation: loadingDots 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Button loading states */
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.btn-loading .btn-text {
+  opacity: 0.8;
+}
+
+.btn-loading .loading-spinner {
+  margin-right: 8px;
+}
+
+/* Authentication loading styles */
+.auth-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.auth-loading .loading-text {
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+}
+
+.auth-loading .loading-spinner {
+  font-size: 1.5em;
+  margin-bottom: 8px;
+}
+
+/* Improve loading states for various components */
+.processing-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.processing-icon .loading-spinner {
+  font-size: 3em;
+}
+
+/* Smooth transitions for loading states */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced scrollbar for loading containers */
+.loading-container,
+.auth-loading,
+.error-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.05);
+}
+
+.loading-container::-webkit-scrollbar,
+.auth-loading::-webkit-scrollbar,
+.error-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.loading-container::-webkit-scrollbar-track,
+.auth-loading::-webkit-scrollbar-track,
+.error-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.loading-container::-webkit-scrollbar-thumb,
+.auth-loading::-webkit-scrollbar-thumb,
+.error-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.loading-container::-webkit-scrollbar-thumb:hover,
+.auth-loading::-webkit-scrollbar-thumb:hover,
+.error-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

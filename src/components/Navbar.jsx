@@ -11,6 +11,11 @@ export default function Navbar({ toggleSidebar }) {
           <span></span>
         </div>
         <SearchBar />
+        {/* <div className="navbar-actions">
+          <div className="branding">
+            <span className="brand-highlight">by bristoHQ</span>
+          </div>
+        </div> */}
       </nav>
     </>
   );

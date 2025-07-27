@@ -1,0 +1,181 @@
+/* OTP Input Component Styles */
+.otp-input-container {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) 0;
+}
+
+.otp-digit {
+  width: 48px;
+  height: 56px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  font-family: "Courier New", monospace;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  transition: var(--transition);
+  outline: none;
+}
+
+.otp-digit:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(19, 172, 88, 0.1);
+  background-color: var(--bg-hover);
+}
+
+.otp-digit:disabled {
+  background-color: var(--bg-tertiary);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.otp-digit:hover:not(:disabled) {
+  border-color: var(--border-light);
+  background-color: var(--bg-hover);
+}
+
+/* Animation for successful input */
+.otp-digit.filled {
+  background-color: rgba(19, 172, 88, 0.1);
+  border-color: var(--primary-color);
+  animation: digitFill 0.2s ease;
+}
+
+@keyframes digitFill {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Error state */
+.otp-input-container.error .otp-digit {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* Success state */
+.otp-input-container.success .otp-digit {
+  border-color: #16a34a;
+  background-color: #f0fdf4;
+}
+
+/* Mobile responsive */
+@media (max-width: var(--breakpoint-md)) {
+  .otp-input-container {
+    gap: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .otp-digit {
+    width: 44px;
+    height: 52px;
+    font-size: 1.375rem;
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .otp-input-container {
+    gap: 6px;
+    max-width: 340px;
+  }
+
+  .otp-digit {
+    width: 40px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .otp-input-container {
+    gap: 4px;
+    max-width: 300px;
+  }
+
+  .otp-digit {
+    width: 36px;
+    height: 44px;
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: var(--breakpoint-xs)) {
+  .otp-input-container {
+    gap: 3px;
+    max-width: 280px;
+  }
+
+  .otp-digit {
+    width: 34px;
+    height: 42px;
+    font-size: 1rem;
+    border-radius: 6px;
+    min-height: 42px;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .otp-digit {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .otp-digit:focus {
+    border-color: #3b82f6;
+    background-color: #1f2937;
+  }
+
+  .otp-digit:disabled {
+    background-color: #1f2937;
+    color: #6b7280;
+  }
+
+  .otp-digit:hover:not(:disabled) {
+    border-color: #6b7280;
+  }
+
+  .otp-digit.filled {
+    background-color: #1e3a8a;
+    border-color: #3b82f6;
+  }
+
+  .otp-input-container.error .otp-digit {
+    border-color: #dc2626;
+    background-color: #1f2937;
+  }
+
+  .otp-input-container.success .otp-digit {
+    border-color: #16a34a;
+    background-color: #1f2937;
+  }
+}

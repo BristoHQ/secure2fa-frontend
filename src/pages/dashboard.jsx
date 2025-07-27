@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import DisplayCards from "../components/DisplayCards";
 import PinReqMessage from "../components/PinReqMessage";
 import Footer from "../components/Footer";
+import { SkeletonDashboard } from "../components/Skeleton";
 function Dashboard() {
   const [sidebarActive, setSidebarActive] = useState(false);
   // In your parent component

@@ -21,7 +21,7 @@
   font-size: 48px;
   color: #13ac58;
   margin-bottom: 16px;
-  animation: pulse 2s infinite;
+  /* animation: pulse 2s infinite; */
 }
 
 @keyframes pulse {
@@ -72,7 +72,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 16px;
+  margin: 16px auto;
+  min-width: 200px;
+  width: 100%;
+  max-width: 280px;
 }
 
 .unlock-btn:hover {
@@ -192,10 +195,6 @@
   cursor: not-allowed;
 }
 
-.rotating {
-  animation: rotate 1s linear infinite;
-}
-
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -203,6 +202,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.forget-pin-section {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
 }
 
 .warning-text {
@@ -239,4 +245,34 @@
     width: 160px;
     font-size: 16px;
   }
+}
+
+/* Loading text and dots */
+.loading-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin: 16px 0;
+}
+
+/* Enhanced button loading states */
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.btn-loading .btn-text {
+  opacity: 0.8;
+}
+
+.btn-loading .loading-spinner {
+  margin-right: 4px;
+}
+
+.verify-btn.btn-loading {
+  background: linear-gradient(45deg, #0f8a47, #3ca76a);
 }

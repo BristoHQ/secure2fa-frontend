@@ -1,0 +1,387 @@
+.elp-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d1117 100%);
+  padding: 20px;
+}
+
+.elp-login-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 550px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.elp-login-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+}
+
+.elp-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.elp-icon {
+  font-size: 64px;
+  color: #ff7979;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotating 1s linear infinite;
+}
+
+.elp-title {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  background: linear-gradient(45deg, #ff7979, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.elp-subtitle {
+  color: #c6c6c6;
+  font-size: 16px;
+  margin: 0;
+}
+
+.security-disclaimer {
+  background: rgba(255, 121, 121, 0.1);
+  border: 1px solid rgba(255, 121, 121, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.disclaimer-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.disclaimer-header i {
+  color: #ff7979;
+  font-size: 20px;
+}
+
+.disclaimer-header h3 {
+  color: #ff7979;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.disclaimer-content ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #c6c6c6;
+}
+
+.disclaimer-content li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.disclaimer-content strong {
+  color: #ffffff;
+}
+
+.elp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.file-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.file-drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+.file-drop-zone.active {
+  border-color: #13ac58;
+  background: rgba(19, 172, 88, 0.1);
+}
+
+.file-drop-zone.has-file {
+  border-color: #13ac58;
+  background: rgba(19, 172, 88, 0.05);
+  padding: 20px;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-drop-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  color: #c6c6c6;
+}
+
+.file-drop-label i {
+  font-size: 48px;
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.file-drop-zone:hover .file-drop-label i {
+  color: #13ac58;
+}
+
+.drop-text p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.drop-hint {
+  font-size: 14px !important;
+  color: #888 !important;
+}
+
+.file-selected {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(19, 172, 88, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(19, 172, 88, 0.2);
+}
+
+.file-selected i {
+  font-size: 32px;
+  color: #13ac58;
+  flex-shrink: 0;
+}
+
+.file-info {
+  flex: 1;
+}
+
+.file-name {
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  font-size: 16px;
+}
+
+.file-size {
+  color: #13ac58;
+  margin: 0;
+  font-size: 14px;
+}
+
+.remove-file {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.2);
+  border-radius: 6px;
+  color: #ff4444;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.remove-file:hover {
+  background: rgba(255, 68, 68, 0.2);
+}
+
+.error-message {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #ff4444;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-message i {
+  font-size: 16px;
+}
+
+.elp-login-button {
+  background: linear-gradient(45deg, #ff7979, #ff6b6b);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.elp-login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 121, 121, 0.4);
+}
+
+.elp-login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.elp-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-link a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c6c6c6;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.back-link a:hover {
+  color: #ffffff;
+}
+
+.help-text {
+  text-align: center;
+}
+
+.help-text p {
+  color: #c6c6c6;
+  font-size: 14px;
+  margin: 0;
+}
+
+.help-text a {
+  color: #13ac58;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.help-text a:hover {
+  text-decoration: underline;
+}
+
+.security-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: rgba(19, 172, 88, 0.1);
+  border: 1px solid rgba(19, 172, 88, 0.2);
+  border-radius: 8px;
+  color: #13ac58;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.security-info i {
+  font-size: 14px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 480px) {
+  .elp-login-container {
+    padding: 15px;
+  }
+
+  .elp-login-card {
+    padding: 30px 20px;
+  }
+
+  .elp-icon {
+    font-size: 48px;
+  }
+
+  .elp-title {
+    font-size: 24px;
+  }
+
+  .file-drop-zone {
+    padding: 30px 15px;
+  }
+
+  .file-drop-zone.has-file {
+    padding: 15px;
+  }
+
+  .file-drop-label i {
+    font-size: 36px;
+  }
+
+  .drop-text p {
+    font-size: 14px;
+  }
+
+  .elp-login-button {
+    padding: 14px 20px;
+  }
+
+  .security-info {
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+
+  .elp-footer {
+    text-align: center;
+  }
+}

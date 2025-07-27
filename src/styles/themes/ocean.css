@@ -1,0 +1,71 @@
+/* Ocean Blue Theme Variables */
+[data-theme="ocean"],
+.theme-ocean {
+  /* Primary Colors - Ocean Blue */
+  --primary-color: #0ea5e9;
+  --primary-dark: #0284c7;
+  --primary-light: #38bdf8;
+
+  /* Secondary Colors - Ocean inspired */
+  --secondary-color: #06b6d4;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --info-color: #06b6d4;
+
+  /* Background Colors - Deep ocean */
+  --bg-primary: #0c1926;
+  --bg-secondary: #1e3a5f;
+  --bg-tertiary: #2563eb;
+  --bg-card: rgba(14, 165, 233, 0.1);
+  --bg-hover: rgba(14, 165, 233, 0.15);
+
+  /* Text Colors - Ocean waves */
+  --text-primary: #e0f2fe;
+  --text-secondary: #b3e5fc;
+  --text-muted: #81d4fa;
+  --text-white: #ffffff;
+  --text-dark: #0c1926;
+
+  /* Border Colors - Ocean depth */
+  --border-color: rgba(14, 165, 233, 0.25);
+  --border-light: rgba(14, 165, 233, 0.4);
+  --border-dark: rgba(14, 165, 233, 0.1);
+
+  /* Shadows - Ocean depth */
+  --shadow-sm: 0 2px 8px rgba(14, 165, 233, 0.2);
+  --shadow: 0 4px 16px rgba(14, 165, 233, 0.25);
+  --shadow-lg: 0 8px 32px rgba(14, 165, 233, 0.3);
+
+  /* Card specific */
+  --card-bg-color: rgba(14, 165, 233, 0.08);
+  --card-box-shadow: 0 4px 20px rgba(14, 165, 233, 0.2);
+}
+
+/* Ocean theme specific styles */
+[data-theme="ocean"] .navbar {
+  background: linear-gradient(135deg, #0c1926, #1e3a5f);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(15px);
+}
+
+[data-theme="ocean"] .sidebar {
+  background: linear-gradient(180deg, #1e3a5f, #0c1926);
+  border-right: 1px solid var(--border-color);
+}
+
+[data-theme="ocean"] .sidebar .nav-item.active {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: var(--text-white);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+[data-theme="ocean"] .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.3);
+  border: 1px solid rgba(14, 165, 233, 0.4);
+}

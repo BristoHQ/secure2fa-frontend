@@ -1,0 +1,82 @@
+/* Cyberpunk Theme Variables */
+[data-theme="cyberpunk"],
+.theme-cyberpunk {
+  /* Primary Colors - Neon Green */
+  --primary-color: #00ff41;
+  --primary-dark: #00cc33;
+  --primary-light: #33ff66;
+
+  /* Secondary Colors - Neon */
+  --secondary-color: #ff00ff;
+  --success-color: #00ff41;
+  --danger-color: #ff0040;
+  --warning-color: #ffaa00;
+  --info-color: #00aaff;
+
+  /* Background Colors - Dark with neon accents */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a0a1a;
+  --bg-tertiary: #2a1a2a;
+  --bg-card: rgba(0, 255, 65, 0.05);
+  --bg-hover: rgba(0, 255, 65, 0.1);
+
+  /* Text Colors - Neon inspired */
+  --text-primary: #00ff41;
+  --text-secondary: #00cc33;
+  --text-muted: #66ff88;
+  --text-white: #ffffff;
+  --text-dark: #0a0a0a;
+
+  /* Border Colors - Neon glow */
+  --border-color: rgba(0, 255, 65, 0.3);
+  --border-light: rgba(0, 255, 65, 0.5);
+  --border-dark: rgba(0, 255, 65, 0.1);
+
+  /* Shadows - Neon glow effect */
+  --shadow-sm: 0 0 0.5rem rgba(0, 255, 65, 0.3);
+  --shadow: 0 0 1rem rgba(0, 255, 65, 0.4);
+  --shadow-lg: 0 0 2rem rgba(0, 255, 65, 0.5);
+
+  /* Card specific */
+  --card-bg-color: rgba(0, 255, 65, 0.05);
+  --card-box-shadow: 0 0 1rem rgba(0, 255, 65, 0.3);
+}
+
+/* Cyberpunk specific styles */
+[data-theme="cyberpunk"] .card:hover {
+  box-shadow: 0 0 1.5rem rgba(0, 255, 65, 0.5);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+}
+
+[data-theme="cyberpunk"] .navbar {
+  background: linear-gradient(45deg, #0a0a0a, #1a0a1a);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 255, 65, 0.2);
+}
+
+[data-theme="cyberpunk"] .sidebar {
+  background: linear-gradient(180deg, #0a0a0a, #1a0a1a);
+  border-right: 1px solid var(--border-color);
+}
+
+[data-theme="cyberpunk"] .sidebar .nav-item.active {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  color: #000000;
+}
+
+[data-theme="cyberpunk"] .btn-primary {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  color: #000000;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}

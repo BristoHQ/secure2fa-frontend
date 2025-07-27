@@ -73,10 +73,11 @@ export default function Card(props) {
   };
 
   const confirmDelete = () => {
-    // Here you would call a delete function passed as prop
-    console.log("Card deleted!");
     setShowDeletePopup(false);
-    // props.onDelete && props.onDelete();
+    // Call the onRemove function passed as prop
+    if (props.onRemove) {
+      props.onRemove();
+    }
   };
 
   const cancelDelete = () => {

@@ -1,0 +1,85 @@
+/* Security Pro Theme Variables */
+[data-theme="security"],
+.theme-security {
+  /* Primary Colors - Professional Blue */
+  --primary-color: #1e3a8a;
+  --primary-dark: #1e40af;
+  --primary-light: #3b82f6;
+
+  /* Secondary Colors - Security focused */
+  --secondary-color: #64748b;
+  --success-color: #059669;
+  --danger-color: #dc2626;
+  --warning-color: #d97706;
+  --info-color: #0891b2;
+
+  /* Background Colors - Professional dark */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: rgba(30, 58, 138, 0.1);
+  --bg-hover: rgba(30, 58, 138, 0.15);
+
+  /* Text Colors - Professional */
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-white: #ffffff;
+  --text-dark: #0f172a;
+
+  /* Border Colors - Subtle professional */
+  --border-color: rgba(30, 58, 138, 0.2);
+  --border-light: rgba(30, 58, 138, 0.3);
+  --border-dark: rgba(30, 58, 138, 0.1);
+
+  /* Shadows - Professional depth */
+  --shadow-sm: 0 2px 4px rgba(30, 58, 138, 0.1);
+  --shadow: 0 4px 8px rgba(30, 58, 138, 0.15);
+  --shadow-lg: 0 8px 16px rgba(30, 58, 138, 0.2);
+
+  /* Card specific */
+  --card-bg-color: rgba(30, 58, 138, 0.08);
+  --card-box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+}
+
+/* Security theme specific styles */
+[data-theme="security"] .navbar {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  border-bottom: 2px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="security"] .sidebar {
+  background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+  border-right: 2px solid var(--border-color);
+}
+
+[data-theme="security"] .sidebar .nav-item.active {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--primary-light)
+  );
+  border-left: 4px solid var(--primary-light);
+  color: var(--text-white);
+}
+
+[data-theme="security"] .card {
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(5px);
+}
+
+[data-theme="security"] .card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 24px rgba(30, 58, 138, 0.25);
+}
+
+[data-theme="security"] .btn-primary {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--primary-light)
+  );
+  border: 1px solid var(--primary-light);
+  font-weight: 600;
+}
