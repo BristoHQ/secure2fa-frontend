@@ -34,7 +34,6 @@ function App() {
           <Route path="/elp-login" element={<ElpLogin />} />
           <Route path="/auth/token-handler" element={<TokenHandler />} />
 
-          {/* Protected routes */}
           <Route
             path="/"
             element={

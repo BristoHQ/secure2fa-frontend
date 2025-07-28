@@ -10,6 +10,7 @@ export default function Sidebar({ isActive }) {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(true);
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function Sidebar({ isActive }) {
               null,
           };
           setUserData(mergedData);
+          setLoading(false); // Only set loading to false when we have data
         } else {
           throw new Error("Could not fetch user data from either endpoint");
         }
@@ -88,13 +90,26 @@ export default function Sidebar({ isActive }) {
         };
 
         setUserData(fallbackData);
+        setLoading(false); // Set loading to false after setting fallback data
       } finally {
-        setLoading(false);
+        // Remove the generic setLoading(false) from here since we handle it above
       }
     };
 
     fetchUserData();
   }, [navigate]);
+
+  // Reset image loading when userData changes
+  useEffect(() => {
+    if (userData) {
+      const avatarUrl = userData.userAvatar || userData.avatar;
+      if (avatarUrl) {
+        setImageLoading(true);
+      } else {
+        setImageLoading(false);
+      }
+    }
+  }, [userData]);
 
   const handleLogout = async () => {
     try {
@@ -111,38 +126,59 @@ export default function Sidebar({ isActive }) {
   return (
     <>
       <div className={`sidebar ${isActive ? "active" : ""}`}>
-        <div className="user-profile">
-          {/* src={userData?.userAvatar || userData?.avatar || Avatar} */}
-          <img
-            src={userData?.userAvatar || userData?.avatar || Avatar}
-            alt="User Profile"
-            onError={(e) => {
-              e.target.src = Avatar; // Fallback to default avatar if image fails to load
-            }}
-          />
-          <div className="user-info">
-            {loading ? (
+        <div className="upper-sidebar">
+          <div className="user-profile">
+            {loading || imageLoading ? (
               <>
-                <div className="skeleton-text skeleton-name"></div>
-                <div className="skeleton-text skeleton-email"></div>
+                <span className="skeleton-avatar"></span>
+                <div className="user-info">
+                  <span className="skeleton-name skeleton-text"></span>
+                  <span className="skeleton-email skeleton-text"></span>
+                </div>
               </>
             ) : (
               <>
-                <h2>
-                  {userData?.displayName ||
-                    userData?.fullName ||
-                    userData?.username ||
-                    "Unknown"}
-                </h2>
-                <p>{userData?.email || "unknown@example.com"}</p>
+                <img
+                  src={userData?.userAvatar || userData?.avatar || Avatar}
+                  alt="User Profile"
+                  onLoad={() => setImageLoading(false)}
+                  onError={(e) => {
+                    e.target.src = Avatar;
+                    setImageLoading(false);
+                  }}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    borderRadius: "50%",
+                    display: "inline-block",
+                    verticalAlign: "top",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    border: "2px solid rgba(255,255,255,0.1)",
+                    margin: 0,
+                    padding: 0,
+                    transition: "opacity 0.3s ease",
+                    opacity: 1,
+                  }}
+                />
+                <div className="user-info">
+                  <h2>
+                    {userData?.displayName ||
+                      userData?.fullName ||
+                      userData?.username ||
+                      "Unknown"}
+                  </h2>
+                  <p>{userData?.email || "unknown@example.com"}</p>
+                </div>
               </>
             )}
           </div>
-        </div>
 
-        <span className="encryption-info">
-          Secure2FA End-to-End Encryption <i className="ri-lock-star-line"></i>
-        </span>
+          <span className="encryption-info">
+            Secure2FA End-to-End Encryption{" "}
+            <i className="ri-lock-star-line"></i>
+          </span>
+        </div>
 
         <div className="divider"></div>
         <div className="lists">
@@ -187,7 +223,7 @@ export default function Sidebar({ isActive }) {
                 <i className="ri-error-warning-line"></i> Manage ELP
               </Link>
             </li>
-              <li>
+            <li>
               <Link
                 to="/support"
                 className={`nav-link ${
