@@ -23,13 +23,13 @@ export default function Sidebar({ isActive }) {
         try {
           currentUser = await userAPI.getCurrentUser();
         } catch (error) {
-          console.error("Error fetching current user:", error);
+          console.error("Sidebar: Error fetching current user:", error);
         }
 
         try {
           userInfo = await userAPI.getUserInfo();
         } catch (error) {
-          console.error("Error fetching user info:", error);
+          console.error("Sidebar: Error fetching user info:", error);
         }
 
         // Merge and prioritize the data
@@ -55,14 +55,16 @@ export default function Sidebar({ isActive }) {
               userInfo?.avatar ||
               null,
           };
+
           setUserData(mergedData);
           setLoading(false); // Only set loading to false when we have data
         } else {
+          console.warn("Sidebar: No user data from API, using fallback.");
           throw new Error("Could not fetch user data from either endpoint");
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        console.error("Error details:", error.message);
+        console.error("Sidebar: Error fetching user data:", error);
+        console.error("Sidebar: Error details:", error.message);
 
         // Check if it's an authentication error
         if (error.message && error.message.includes("Authentication failed")) {
@@ -91,22 +93,29 @@ export default function Sidebar({ isActive }) {
 
         setUserData(fallbackData);
         setLoading(false); // Set loading to false after setting fallback data
-      } finally {
-        // Remove the generic setLoading(false) from here since we handle it above
       }
     };
 
     fetchUserData();
   }, [navigate]);
 
-  // Reset image loading when userData changes
+  // Reset image loading when userData changes, and handle cached images
   useEffect(() => {
     if (userData) {
       const avatarUrl = userData.userAvatar || userData.avatar;
-      if (avatarUrl) {
-        setImageLoading(true);
-      } else {
+      if (!avatarUrl) {
         setImageLoading(false);
+        return;
+      }
+      setImageLoading(true);
+      // Check if image is already cached (complete)
+      const img = new window.Image();
+      img.src = avatarUrl;
+      if (img.complete) {
+        setImageLoading(false);
+      } else {
+        img.onload = () => setImageLoading(false);
+        img.onerror = () => setImageLoading(false);
       }
     }
   }, [userData]);
