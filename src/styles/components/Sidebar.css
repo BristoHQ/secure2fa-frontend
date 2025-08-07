@@ -228,6 +228,31 @@
   background-color: #d32f2f;
 }
 
+/* Logout button loading state */
+.sidebar .logout button.loading {
+  background-color: #d32f2f;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.sidebar .logout button:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.sidebar .logout button .rotating {
+  animation: rotating 1s linear infinite;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Desktop - Ensure sidebar stays in place */
 @media (min-width: 769px) {
   .sidebar {

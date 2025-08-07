@@ -1,11 +1,26 @@
+/* Container for responsive card layout */
+.pin-cards-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
 .pin-req-card {
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   border-radius: 16px;
   padding: 24px;
-  margin: 16px auto;
-  max-width: 400px;
+  width: 100%;
+  max-width: 450px;
+  min-width: 350px;
+  flex: 1;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -276,4 +291,35 @@
 
 .verify-btn.btn-loading {
   background: linear-gradient(45deg, #0f8a47, #3ca76a);
+}
+
+/* Mobile Responsive - Stack cards vertically on small screens */
+@media (max-width: 768px) {
+  .pin-cards-container {
+    flex-direction: column;
+    gap: 16px;
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  .pin-req-card {
+    margin: 8px 0;
+    max-width: none;
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+/* Extra mobile optimization for very small screens */
+@media (max-width: 480px) {
+  .pin-cards-container {
+    gap: 12px;
+    padding: 0 8px;
+  }
+
+  .pin-req-card {
+    padding: 20px;
+    margin: 4px 0;
+    min-width: unset;
+  }
 }

@@ -76,14 +76,14 @@ const PinSetupModal = ({ isOpen, onClose, message, actionType = "setup" }) => {
                 <i className="ri-shield-check-line"></i>
                 <span>Protects your 2FA tokens from unauthorized access</span>
               </li>
-              <li>
+              {/* <li>
                 <i className="ri-lock-line"></i>
                 <span>Ensures device security even if compromised</span>
               </li>
               <li>
                 <i className="ri-key-2-line"></i>
                 <span>Required for Emergency Login Package (ELP)</span>
-              </li>
+              </li> */}
               <li>
                 <i className="ri-time-line"></i>
                 <span>Quick setup - takes less than 2 minutes</span>

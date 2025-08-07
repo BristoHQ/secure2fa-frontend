@@ -95,10 +95,13 @@ const Register = () => {
     }
   };
 
-  const handleGoogleRegister = async () => {
-    console.log("Google registration initiated");
-    // Replace with Google OAuth logic
-    // Example: signUpWithGoogle()
+  const handleGoogleRegister = () => {
+    // Redirect URL should point to our token handler
+    const redirectUrl = encodeURIComponent(
+      `${window.location.origin}/auth/token-handler`
+    );
+    const googleOAuthUrl = `http://localhost:9000/oauth2/authorization/google?redirect_uri=${redirectUrl}`;
+    window.location.href = googleOAuthUrl;
   };
 
   return (
@@ -218,8 +221,8 @@ const Register = () => {
           >
             {isLoading ? (
               <>
-                <Skeleton width="20px" height="20px" />
-                <Skeleton variant="text" width="120px" />
+                <i className="ri-user-add-line"></i>
+                Creating...
               </>
             ) : (
               <>

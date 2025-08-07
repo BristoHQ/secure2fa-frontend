@@ -16,6 +16,9 @@ import Inbox from "./pages/Inbox";
 import Appearance from "./pages/Appearance";
 import ManageELP from "./pages/ManageELP";
 import BackupRestore from "./pages/BackupRestore";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPasswordTest from "./pages/ResetPasswordTest";
+import ResetPasswordRedirect from "./components/ResetPasswordRedirect";
 import NotFound404 from "./pages/NotFound404";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -26,10 +29,16 @@ function App() {
     <ThemeProvider>
       <Router>
         <Routes>
-          {/* Public routes */}
           <Route path="*" element={<NotFound404 />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
+          <Route
+            path="/reset-password.html"
+            element={<ResetPasswordRedirect />}
+          />
+          <Route path="/reset-test" element={<ResetPasswordTest />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/elp-login" element={<ElpLogin />} />
           <Route path="/auth/token-handler" element={<TokenHandler />} />

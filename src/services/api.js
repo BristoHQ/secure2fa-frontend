@@ -1,4 +1,22 @@
+import CryptoJS from "crypto-js";
 const API_BASE_URL = "http://localhost:9000";
+
+// Use CryptoJS to hash the pin and get the first 16 bytes as key
+function getAesKey(pin) {
+  const hash = CryptoJS.SHA256(pin);
+  // Get first 16 bytes (32 hex chars) for AES-128
+  return CryptoJS.enc.Hex.parse(
+    hash.toString(CryptoJS.enc.Hex).substring(0, 32)
+  );
+}
+
+function decryptAES(key, ciphertext) {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
 
 // Helper function to get auth token from localStorage
 const getAuthToken = () => {
@@ -14,6 +32,30 @@ const setAuthToken = (token) => {
 const removeAuthToken = () => {
   localStorage.removeItem("authToken");
 };
+
+// Helper function to clear auth and redirect to login
+const clearAuthAndRedirect = () => {
+  removeAuthToken();
+  // Clear any other cached data
+  if (typeof localStorage !== "undefined") {
+    // Clear any cached user data or other app-specific data
+    localStorage.removeItem("userData");
+    localStorage.removeItem("userProfile");
+    // Add any other app-specific cache clearing here
+  }
+  if (typeof window !== "undefined") {
+    window.location.href = "/login";
+  }
+};
+
+// Expose a global function for developers to manually clear auth if user was deleted
+if (typeof window !== "undefined") {
+  window.clearAuthAndRedirect = clearAuthAndRedirect;
+  window.clearDeletedUserAuth = () => {
+    console.log("Clearing authentication for deleted user...");
+    clearAuthAndRedirect();
+  };
+}
 
 // Helper function to create headers with auth token
 const createHeaders = (includeAuth = true) => {
@@ -34,11 +76,22 @@ const createHeaders = (includeAuth = true) => {
 // Helper function to handle API responses
 const handleResponse = async (response) => {
   if (!response.ok) {
-    // Handle authentication errors
+    // Handle authentication errors and user-not-found scenarios
     if (response.status === 401 || response.status === 403) {
       // Clear invalid token
       removeAuthToken();
       throw new Error("Authentication failed. Please login again.");
+    }
+
+    // Handle 500 errors that might indicate deleted user with valid token
+    if (response.status === 500) {
+      // Check if this is a user-related endpoint
+      const url = response.url;
+      if (url.includes("/users/me") || url.includes("/users/info")) {
+        // This is likely a deleted user with valid token scenario
+        clearAuthAndRedirect();
+        throw new Error("User account not found. Please login again.");
+      }
     }
 
     // Try to parse error response as JSON, fallback to text
@@ -87,10 +140,10 @@ export const authAPI = {
     });
 
     console.log("Login request:", response);
-    
+
     const data = await handleResponse(response);
     console.log("Login response data:", data);
-    
+
     if (data.accessToken) {
       setAuthToken(data.accessToken);
     }
@@ -124,7 +177,6 @@ export const authAPI = {
 
       // Try to parse as JSON
       try {
-   
         throw new Error(
           errorData.message ||
             errorData.error ||
@@ -132,7 +184,8 @@ export const authAPI = {
         );
       } catch {
         throw new Error(
-          errorData.message  || `Registration failed with status ${response.status}`
+          errorData.message ||
+            `Registration failed with status ${response.status}`
         );
       }
     }
@@ -440,6 +493,21 @@ export const userAPI = {
 
     return handleResponse(response);
   },
+
+  // Update password
+  updatePassword: async (currentPassword, newPassword) => {
+    const response = await fetch(
+      `${API_BASE_URL}/api/v1/users/profile/password?currentPassword=${encodeURIComponent(
+        currentPassword
+      )}&newPassword=${encodeURIComponent(newPassword)}`,
+      {
+        method: "PUT",
+        headers: createHeaders(),
+      }
+    );
+
+    return handleResponse(response);
+  },
 };
 
 // Premium API endpoints
@@ -582,6 +650,8 @@ export const pinAPI = {
   },
 
   // Check if PIN exists
+  // Note: This endpoint returns 404 when PIN doesn't exist, which is normal behavior
+  // The browser console will show this 404 error, but it's handled gracefully by our code
   checkPinExists: async () => {
     try {
       const response = await fetch(`${TOTP_BASE_URL}/api/v1/pin/get-pin`, {
@@ -590,32 +660,24 @@ export const pinAPI = {
       });
 
       if (response.ok) {
-        // If we get a successful response, PIN exists
-        const result = await handleTOTPResponse(response);
-        return { exists: true, data: result };
+        // PIN exists and we can read it
+        try {
+          const result = await response.json();
+          return { exists: true, data: result };
+        } catch {
+          // Response was OK but couldn't parse JSON - still means PIN exists
+          return { exists: true };
+        }
       } else if (response.status === 404) {
-        // 404 specifically means PIN not found
+        // 404 means PIN not found - this is expected when no PIN is set
+        // The browser console will show this 404, but it's normal behavior
         return { exists: false };
       } else {
-        // For other HTTP errors, treat as PIN not existing to prompt setup
-        console.warn(
-          "PIN check returned non-404 error, treating as no PIN:",
-          response.status
-        );
+        // Other HTTP errors (401, 403, 500, etc.) - treat as no PIN to prompt setup
         return { exists: false };
       }
-    } catch (error) {
-      console.error("Error checking PIN exists:", error);
-      // If PIN doesn't exist, API should return error
-      if (
-        error.message &&
-        (error.message.includes("PIN not found") ||
-          error.message.includes("404") ||
-          error.message.includes("Not Found"))
-      ) {
-        return { exists: false };
-      }
-      // For network errors or other issues, assume no PIN to prompt setup
+    } catch {
+      // Network errors, CORS issues, etc. - assume no PIN to allow setup
       return { exists: false };
     }
   },
@@ -704,13 +766,26 @@ export const elpAPI = {
 // Account/TOTP API endpoints
 export const totpAPI = {
   // Get all accounts
-  getAccounts: async () => {
-    const response = await fetch(`${TOTP_BASE_URL}/api/v1/accounts`, {
-      method: "GET",
-      headers: createTOTPHeaders(),
+  getAccounts: async (enteredPin) => {
+    const response = await fetch(
+      `${TOTP_BASE_URL}/api/v1/accounts?pin=${encodeURIComponent(enteredPin)}`,
+      {
+        method: "GET",
+        headers: createTOTPHeaders(),
+      }
+    );
+    let responseData = await handleTOTPResponse(response);
+    console.log("Accounts response data:", responseData);
+
+    const key = getAesKey(enteredPin);
+    responseData.forEach((element) => {
+      let code = decryptAES(key, element.code);
+      element.code = code;
     });
 
-    return handleTOTPResponse(response);
+    console.log("Decrypted accounts:", responseData);
+
+    return responseData;
   },
 
   // Upload logo image
@@ -749,16 +824,29 @@ export const totpAPI = {
   },
 
   // Get current TOTP codes
-  getCurrentCodes: async () => {
+  getCurrentCodes: async (enteredPin) => {
     const response = await fetch(
-      `${TOTP_BASE_URL}/api/v1/accounts/current-codes`,
+      `${TOTP_BASE_URL}/api/v1/accounts/current-codes?pin=${encodeURIComponent(
+        enteredPin
+      )}`,
       {
         method: "GET",
         headers: createTOTPHeaders(),
       }
     );
 
-    return handleTOTPResponse(response);
+    let responseData = await handleTOTPResponse(response);
+    console.log("current-codes response data:", responseData);
+
+    const key = getAesKey(enteredPin);
+    responseData.forEach((element) => {
+      let code = decryptAES(key, element.code);
+      element.code = code;
+    });
+
+    console.log("Decrypted current-codes:", responseData);
+
+    return responseData;
   },
 
   // Remove account
@@ -778,4 +866,4 @@ export const totpAPI = {
 };
 
 // Export helper functions
-export { getAuthToken, setAuthToken, removeAuthToken };
+export { getAuthToken, setAuthToken, removeAuthToken, clearAuthAndRedirect };

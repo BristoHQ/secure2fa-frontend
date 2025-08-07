@@ -6,13 +6,27 @@ const ForgetPinButton = ({
   className = "",
   variant = "link", // "button" | "link" | "text"
   onSuccess,
+  onModalOpen,
+  onModalClose,
   disabled = false,
+  hideModal = false, // New prop to control whether to render the modal
 }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleSuccess = () => {
     setShowModal(false);
+    onModalClose?.();
     onSuccess?.();
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+    onModalOpen?.();
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    onModalClose?.();
   };
 
   const buttonClass = `forget-pin-btn forget-pin-btn--${variant} ${className}`;
@@ -21,7 +35,7 @@ const ForgetPinButton = ({
     <>
       <button
         className={buttonClass}
-        onClick={() => setShowModal(true)}
+        onClick={handleOpenModal}
         disabled={disabled}
         type="button"
       >
@@ -29,11 +43,13 @@ const ForgetPinButton = ({
         Forgot PIN?
       </button>
 
-      <ForgetPinModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onSuccess={handleSuccess}
-      />
+      {!hideModal && (
+        <ForgetPinModal
+          isOpen={showModal}
+          onClose={handleCloseModal}
+          onSuccess={handleSuccess}
+        />
+      )}
     </>
   );
 };

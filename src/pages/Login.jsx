@@ -120,8 +120,8 @@ const Login = () => {
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? (
               <>
-                <Skeleton width="20px" height="20px" />
-                <Skeleton variant="text" width="80px" />
+                <i className="ri-login-box-line"></i>
+                Trying to Sign In...
               </>
             ) : (
               <>
@@ -169,6 +169,10 @@ const Login = () => {
           <Link to="/elp-login" className="emergency-link">
             <i className="ri-key-2-line"></i>
             Emergency Login
+          </Link>
+          <Link to="/forgot-password" className="forgot-password-link">
+            <i className="ri-lock-unlock-line"></i>
+            Forgot Password?
           </Link>
         </div>
 

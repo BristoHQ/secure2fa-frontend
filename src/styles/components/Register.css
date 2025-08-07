@@ -120,8 +120,20 @@
   pointer-events: none;
 }
 
+.form-group.username-group::before {
+  content: "\f007";
+  font-family: "remixicon";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .form-group.email-group::before {
-  content: "\f0e0"; /* FontAwesome email icon */
+  content: "\f0e0";
   font-family: "remixicon";
   position: absolute;
   left: 16px;
@@ -133,15 +145,15 @@
 }
 
 .form-group.password-group::before {
-  content: "\f023"; /* FontAwesome lock icon */
+  content: "\f023";
   font-family: "remixicon";
   position: absolute;
   left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 18px; /* Align with input text (16px padding + small adjustment) */
   color: #888;
   z-index: 1;
   pointer-events: none;
+  line-height: 1;
 }
 
 .form-input {
@@ -432,9 +444,13 @@
   }
 
   .form-group.name-group::before,
-  .form-group.email-group::before,
+  .form-group.email-group::before {
+    left: 14px;
+  }
+
   .form-group.password-group::before {
     left: 14px;
+    top: 17px; /* Adjust for responsive padding */
   }
 }
 
@@ -502,10 +518,15 @@
   }
 
   .form-group.name-group::before,
-  .form-group.email-group::before,
+  .form-group.email-group::before {
+    left: 13px;
+    font-size: 15px;
+  }
+
   .form-group.password-group::before {
     left: 13px;
     font-size: 15px;
+    top: 16px; /* Adjust for smaller responsive padding */
   }
 }
 
@@ -571,10 +592,15 @@
   }
 
   .form-group.name-group::before,
-  .form-group.email-group::before,
+  .form-group.email-group::before {
+    left: 12px;
+    font-size: 14px;
+  }
+
   .form-group.password-group::before {
     left: 12px;
     font-size: 14px;
+    top: 15px; /* Adjust for smaller responsive padding */
   }
 }
 
@@ -659,10 +685,15 @@
   }
 
   .form-group.name-group::before,
-  .form-group.email-group::before,
+  .form-group.email-group::before {
+    left: 10px;
+    font-size: 13px;
+  }
+
   .form-group.password-group::before {
     left: 10px;
     font-size: 13px;
+    top: 14px; /* Adjust for smallest responsive padding */
   }
 
   /* Touch optimization for smallest screens */

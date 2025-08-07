@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/pages/NotFound404.css";
 const buyMeCoffeeLogo = (
   // Inline SVG, replace with <img src="your_logo.png" /> if you prefer
@@ -18,11 +19,20 @@ const buyMeCoffeeLogo = (
 );
 
 export default function NotFound404() {
+  const navigate = useNavigate();
+
   return (
     <div className="notfound-wrapper">
-      <h1>404</h1>
+      {/* Go Back Button */}
+      <button
+        className="back-dashboard-btn"
+        onClick={() => navigate("/dashboard")}
+       
+      >
+        <i className="ri-arrow-left-line" style={{ fontSize: 18 }}></i>
+        Back to Dashboard
+      </button>
       <h2>Page Not Found</h2>
-      <p>Oops! The page you’re looking for doesn't exist or has been moved.</p>
       <div className="suggestion">
         <span>Are you trying to find this?</span>
         <a

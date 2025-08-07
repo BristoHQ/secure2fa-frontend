@@ -151,16 +151,13 @@ const Profile = () => {
       setSuccessMessage("");
       setLoading(true);
 
-      // Track which fields were updated
       const updates = [];
 
-      // Check for changes by comparing with original data
       if (!originalUserInfo) {
         setApiError("No original user data to compare changes");
         return;
       }
 
-      // Update username if changed (this returns a new token)
       if (
         userInfo.username &&
         userInfo.username !== originalUserInfo.username
@@ -182,7 +179,6 @@ const Profile = () => {
         }
       }
 
-      // Update email if changed (this returns a new token)
       if (userInfo.email && userInfo.email !== originalUserInfo.email) {
         try {
           const response = await userAPI.updateEmail(userInfo.email);
@@ -200,7 +196,6 @@ const Profile = () => {
         }
       }
 
-      // Update full name if changed
       if (
         userInfo.fullName &&
         userInfo.fullName !== originalUserInfo.fullName
@@ -218,7 +213,6 @@ const Profile = () => {
         }
       }
 
-      // Update phone number if changed
       if (
         userInfo.phoneNumber &&
         userInfo.phoneNumber !== originalUserInfo.phoneNumber
@@ -236,7 +230,6 @@ const Profile = () => {
         }
       }
 
-      // Update avatar if a new file was selected
       if (userInfo.avatarFile) {
         try {
           await userAPI.updateAvatar(userInfo.avatarFile);
@@ -252,16 +245,15 @@ const Profile = () => {
 
       if (updates.length > 0) {
         setSuccessMessage(`Successfully updated: ${updates.join(", ")}`);
-        setApiError(""); // Clear any previous errors
+        setApiError("");
         setTimeout(() => setSuccessMessage(""), 3000);
 
-        // Update the original user info to reflect the new current state
         const updatedUserInfo = { ...userInfo };
         if (userInfo.avatarFile) {
-          updatedUserInfo.avatarFile = null; // Reset avatarFile after successful upload
+          updatedUserInfo.avatarFile = null;
         }
         setOriginalUserInfo(updatedUserInfo);
-        setUserInfo(updatedUserInfo); // Also update current userInfo to clear the file
+        setUserInfo(updatedUserInfo);
       } else {
         setApiError("No changes detected to save.");
       }
@@ -275,14 +267,63 @@ const Profile = () => {
     }
   };
 
-  const handlePasswordChange = () => {
-    // Handle password change logic here
-    setShowChangePassword(false);
-    setPasswordData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+  const handlePasswordChange = async () => {
+    try {
+      // Validate passwords
+      if (!passwordData.currentPassword) {
+        setApiError("Current password is required");
+        return;
+      }
+
+      if (!passwordData.newPassword) {
+        setApiError("New password is required");
+        return;
+      }
+
+      if (passwordData.newPassword !== passwordData.confirmPassword) {
+        setApiError("New passwords do not match");
+        return;
+      }
+
+      if (passwordData.newPassword.length < 8) {
+        setApiError("New password must be at least 8 characters long");
+        return;
+      }
+
+      setLoading(true);
+      setApiError("");
+      setSuccessMessage("");
+
+      // Call the API to update password
+      await userAPI.updatePassword(
+        passwordData.currentPassword,
+        passwordData.newPassword
+      );
+
+      setSuccessMessage("Password updated successfully");
+      setShowChangePassword(false);
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (error) {
+      console.error("Error updating password:", error);
+      if (
+        error.message &&
+        error.message.includes("Current password is incorrect")
+      ) {
+        setApiError("Current password is incorrect");
+      } else {
+        setApiError(
+          "Failed to update password. " + (error.message || "Please try again.")
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSecuritySettingChange = (setting, value) => {
@@ -310,7 +351,9 @@ const Profile = () => {
   return (
     <div className="profile-container">
       {loading ? (
-        <SkeletonPage type="profile" />
+        <>
+          <h1>Loading...</h1>
+        </>
       ) : (
         <div className="profile-content-wrapper">
           <div className="profile-header">
@@ -509,6 +552,16 @@ const Profile = () => {
                     </button>
                   </div>
 
+                  <div className="password-options">
+                    <Link
+                      to="/forgot-password"
+                      className="forgot-password-link"
+                    >
+                      <i className="fas fa-question-circle"></i>
+                      Forgot your password?
+                    </Link>
+                  </div>
+
                   {showChangePassword && (
                     <div className="password-change-form">
                       <div className="form-group">
@@ -541,6 +594,13 @@ const Profile = () => {
                           className="form-input"
                           placeholder="Enter new password"
                         />
+                        {passwordData.newPassword &&
+                          passwordData.newPassword.length < 8 && (
+                            <div className="password-hint">
+                              <i className="fas fa-info-circle"></i>
+                              Password must be at least 8 characters long
+                            </div>
+                          )}
                       </div>
 
                       <div className="form-group">
@@ -557,15 +617,52 @@ const Profile = () => {
                           className="form-input"
                           placeholder="Confirm new password"
                         />
+                        {passwordData.confirmPassword &&
+                          passwordData.newPassword !==
+                            passwordData.confirmPassword && (
+                            <div className="password-error">
+                              <i className="fas fa-exclamation-triangle"></i>
+                              Passwords do not match
+                            </div>
+                          )}
                       </div>
 
                       <div className="action-buttons">
                         <button
                           onClick={handlePasswordChange}
                           className="save-button"
+                          disabled={
+                            loading ||
+                            !passwordData.currentPassword ||
+                            !passwordData.newPassword ||
+                            !passwordData.confirmPassword ||
+                            passwordData.newPassword !==
+                              passwordData.confirmPassword ||
+                            passwordData.newPassword.length < 8
+                          }
                         >
-                          <i className="fas fa-check"></i>
-                          Update Password
+                          <i
+                            className={`fas ${
+                              loading ? "fa-spinner fa-spin" : "fa-check"
+                            }`}
+                          ></i>
+                          {loading ? "Updating..." : "Update Password"}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowChangePassword(false);
+                            setPasswordData({
+                              currentPassword: "",
+                              newPassword: "",
+                              confirmPassword: "",
+                            });
+                            setApiError("");
+                          }}
+                          className="cancel-button"
+                          disabled={loading}
+                        >
+                          <i className="fas fa-times"></i>
+                          Cancel
                         </button>
                       </div>
                     </div>
@@ -619,10 +716,13 @@ const Profile = () => {
                               e.target.checked
                             )
                           }
-                           // Disable toggle
+                          // Disable toggle
                           disabled
                         />
-                        <span className="toggle-slider" style={{ cursor: "not-allowed" }}></span>
+                        <span
+                          className="toggle-slider"
+                          style={{ cursor: "not-allowed" }}
+                        ></span>
                       </label>
                     </div>
                   </div>

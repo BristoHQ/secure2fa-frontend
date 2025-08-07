@@ -286,12 +286,28 @@ const AddToken = () => {
       newErrors.totpSecret = "TOTP secret must be at least 16 characters";
     }
 
-    if (!formData.issuer && !formData.customIssuer.trim()) {
-      newErrors.issuer = "Please select or enter an issuer";
+    // Custom issuer validation
+    if (formData.issuer === "Custom") {
+      if (!formData.customIssuer.trim()) {
+        newErrors.customIssuer = "Custom issuer name is required";
+      } else if (formData.customIssuer.length < 3) {
+        newErrors.customIssuer = "Issuer must be at least 3 characters";
+      } else if (formData.customIssuer.length > 12) {
+        newErrors.customIssuer = "Issuer must be at most 12 characters";
+      }
     }
 
+    // Nickname validation
     if (!formData.nickname.trim()) {
       newErrors.nickname = "Nickname is required";
+    } else if (formData.nickname.length < 3) {
+      newErrors.nickname = "Nickname must be at least 3 characters";
+    } else if (formData.nickname.length > 12) {
+      newErrors.nickname = "Nickname must be at most 12 characters";
+    }
+
+    if (!formData.issuer && !formData.customIssuer.trim()) {
+      newErrors.issuer = "Please select or enter an issuer";
     }
 
     setErrors(newErrors);
@@ -592,8 +608,11 @@ const AddToken = () => {
                       handleInputChange("customIssuer", e.target.value)
                     }
                     placeholder="Enter custom issuer name"
-                    className="form-input custom-issuer-input"
+                    className={`form-input custom-issuer-input ${
+                      errors.customIssuer ? "error" : ""
+                    }`}
                     disabled={isProcessing}
+                    maxLength={14}
                   />
                 )}
               </div>
@@ -615,6 +634,7 @@ const AddToken = () => {
                 placeholder="Enter a nickname for this token"
                 className={`form-input ${errors.nickname ? "error" : ""}`}
                 disabled={isProcessing}
+                maxLength={14}
               />
               {errors.nickname && (
                 <div className="error-message">{errors.nickname}</div>

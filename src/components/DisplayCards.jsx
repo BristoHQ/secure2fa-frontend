@@ -23,7 +23,7 @@ export default function DisplayCards({ enteredPin }) {
         // Fetch accounts first
         let accountsData = [];
         try {
-          accountsData = await totpAPI.getAccounts();
+          accountsData = await totpAPI.getAccounts(enteredPin);
           console.log("Fetched accounts:", accountsData);
 
           setAccounts(accountsData);
@@ -48,7 +48,7 @@ export default function DisplayCards({ enteredPin }) {
         // Only fetch codes if we have accounts
         if (accountsData.length > 0) {
           try {
-            const codesData = await totpAPI.getCurrentCodes();
+            const codesData = await totpAPI.getCurrentCodes(enteredPin);
 
             // Convert codes array to key-value mapping
             if (Array.isArray(codesData)) {
@@ -91,7 +91,7 @@ export default function DisplayCards({ enteredPin }) {
       if (accountsRef.current.length === 0) return;
 
       try {
-        const codesData = await totpAPI.getCurrentCodes();
+        const codesData = await totpAPI.getCurrentCodes(enteredPin);
 
         // Convert codes array to key-value mapping
         if (Array.isArray(codesData)) {
@@ -131,8 +131,7 @@ export default function DisplayCards({ enteredPin }) {
   const handleRemoveAccount = async (issuer, nickname) => {
     try {
       await totpAPI.removeAccount(issuer, nickname);
-      // Refresh accounts after removal
-      const accountsData = await totpAPI.getAccounts();
+      const accountsData = await totpAPI.getAccounts(enteredPin);
 
       setAccounts(accountsData);
     } catch (err) {

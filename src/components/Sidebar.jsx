@@ -11,6 +11,7 @@ export default function Sidebar({ isActive }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageLoading, setImageLoading] = useState(true);
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -121,6 +122,9 @@ export default function Sidebar({ isActive }) {
   }, [userData]);
 
   const handleLogout = async () => {
+    if (logoutLoading) return; // Prevent multiple clicks
+
+    setLogoutLoading(true);
     try {
       await authAPI.logout();
       navigate("/login");
@@ -129,6 +133,8 @@ export default function Sidebar({ isActive }) {
       console.error("Logout error:", error);
       authAPI.logout(); // This clears localStorage
       navigate("/login");
+    } finally {
+      setLogoutLoading(false);
     }
   };
 
@@ -139,10 +145,26 @@ export default function Sidebar({ isActive }) {
           <div className="user-profile">
             {loading || imageLoading ? (
               <>
-                <span className="skeleton-avatar"></span>
+                <span
+                  className="skeleton-avatar"
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    borderRadius: "50%",
+                    display: "inline-block",
+                    verticalAlign: "top",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    border: "2px solid rgba(255,255,255,0.1)",
+                    margin: 0,
+                    padding: 0,
+                    transition: "opacity 0.3s ease",
+                    opacity: 1,
+                  }}
+                ></span>
                 <div className="user-info">
-                  <span className="skeleton-name skeleton-text"></span>
-                  <span className="skeleton-email skeleton-text"></span>
+                  <h3>Loading...</h3>
+                  <p>Loading email...</p>
                 </div>
               </>
             ) : (
@@ -276,8 +298,20 @@ export default function Sidebar({ isActive }) {
         </div>
 
         <div className="logout">
-          <button className="logout-button" onClick={handleLogout}>
-            <i className="ri-logout-box-r-line"></i> Logout
+          <button
+            className={`logout-button ${logoutLoading ? "loading" : ""}`}
+            onClick={handleLogout}
+            disabled={logoutLoading}
+          >
+            {logoutLoading ? (
+              <>
+                <i className="ri-loader-4-line rotating"></i> Logging out...
+              </>
+            ) : (
+              <>
+                <i className="ri-logout-box-r-line"></i> Logout
+              </>
+            )}
           </button>
         </div>
       </div>

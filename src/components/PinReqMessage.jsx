@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { pinAPI } from "../services/api";
 import ForgetPinButton from "./ForgetPinButton";
+import ForgetPinModal from "./ForgetPinModal";
 import PinSetupModal from "./PinSetupModal";
 import "../styles/components/PinReqMessage.css";
 
@@ -12,6 +13,7 @@ export default function PinReqMessage({ onPinVerified }) {
   const [pinExists, setPinExists] = useState(null); // null = not checked, true = exists, false = doesn't exist
   const [showPinSetupModal, setShowPinSetupModal] = useState(false);
   const [checkingPin, setCheckingPin] = useState(false);
+  const [isForgetPinModalOpen, setIsForgetPinModalOpen] = useState(false);
 
   const handleUnlockClick = async () => {
     // Check PIN status when user tries to unlock
@@ -27,11 +29,13 @@ export default function PinReqMessage({ onPinVerified }) {
           setShowPinEntry(true);
         } else {
           setShowPinSetupModal(true);
+          setIsForgetPinModalOpen(false); // Close forget PIN modal if open
         }
       } catch (error) {
         console.error("Error checking PIN status:", error);
         setPinExists(false);
         setShowPinSetupModal(true);
+        setIsForgetPinModalOpen(false); // Close forget PIN modal if open
       } finally {
         setCheckingPin(false);
       }
@@ -40,6 +44,7 @@ export default function PinReqMessage({ onPinVerified }) {
       setError("");
     } else {
       setShowPinSetupModal(true);
+      setIsForgetPinModalOpen(false); // Close forget PIN modal if open
     }
   };
 
@@ -108,7 +113,7 @@ export default function PinReqMessage({ onPinVerified }) {
   };
 
   return (
-    <>
+    <div className="pin-cards-container">
       <div className="pin-req-card">
         <div className="lock-icon">
           <i className="ri-lock-star-fill"></i>
@@ -157,6 +162,20 @@ export default function PinReqMessage({ onPinVerified }) {
                 <i className="ri-unlock-line"></i>
                 Enter PIN to Access
               </button>
+            ) : isForgetPinModalOpen ? (
+              <ForgetPinModal
+                isOpen={true}
+                onClose={() => {
+                  setIsForgetPinModalOpen(false);
+                }}
+                onSuccess={() => {
+                  // Reset the PIN entry form after successful PIN reset
+                  setShowPinEntry(false);
+                  setPin("");
+                  setError("");
+                  setIsForgetPinModalOpen(false);
+                }}
+              />
             ) : (
               <div className="pin-entry-section">
                 <div className="pin-input-container">
@@ -222,7 +241,19 @@ export default function PinReqMessage({ onPinVerified }) {
                       setShowPinEntry(false);
                       setPin("");
                       setError("");
+                      // Also close the PIN setup modal if it's open
+                      setShowPinSetupModal(false);
+                      setIsForgetPinModalOpen(false);
                     }}
+                    onModalOpen={() => {
+                      // Close PIN setup modal when forget PIN modal opens
+                      setShowPinSetupModal(false);
+                      setIsForgetPinModalOpen(true);
+                    }}
+                    onModalClose={() => {
+                      setIsForgetPinModalOpen(false);
+                    }}
+                    hideModal={true}
                   />
                 </div>
               </div>
@@ -236,29 +267,31 @@ export default function PinReqMessage({ onPinVerified }) {
         </div>
       </div>
 
-      {/* PIN Setup Modal */}
-      <PinSetupModal
-        isOpen={showPinSetupModal}
-        onClose={() => {
-          setShowPinSetupModal(false);
-          // Refresh PIN status when modal is closed
-          const checkPinStatus = async () => {
-            try {
-              setCheckingPin(true);
-              const result = await pinAPI.checkPinExists();
-              setPinExists(result.exists);
-            } catch (error) {
-              console.error("Error checking PIN status:", error);
-              setPinExists(false);
-            } finally {
-              setCheckingPin(false);
-            }
-          };
-          checkPinStatus();
-        }}
-        actionType="accessTokens"
-        message="Setup a PIN to securely access your TOTP tokens and authentication data."
-      />
-    </>
+      {/* PIN Setup Modal - only show if ForgetPinModal is not open */}
+      {!isForgetPinModalOpen && (
+        <PinSetupModal
+          isOpen={showPinSetupModal}
+          onClose={() => {
+            setShowPinSetupModal(false);
+            // Refresh PIN status when modal is closed
+            const checkPinStatus = async () => {
+              try {
+                setCheckingPin(true);
+                const result = await pinAPI.checkPinExists();
+                setPinExists(result.exists);
+              } catch (error) {
+                console.error("Error checking PIN status:", error);
+                setPinExists(false);
+              } finally {
+                setCheckingPin(false);
+              }
+            };
+            checkPinStatus();
+          }}
+          actionType="accessTokens"
+          message="Setup a PIN to securely access your TOTP tokens and authentication data."
+        />
+      )}
+    </div>
   );
 }
